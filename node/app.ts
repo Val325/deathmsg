@@ -17,8 +17,18 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/msg/:id',(req, res) => {
+app.get('/msg/id/:id',(req, res) => {
     let id = req.params.id;
+    //send json data
+}) 
+
+app.get('/msg/link/:link',(req, res) => {
+    let link = req.params.link;
+
+    db.get("SELECT * FROM messages WHERE link = ?",[link], function(err:any, row:any) {
+        console.log(row);
+        return row; 
+    });
     //send json data
 }) 
 
@@ -27,11 +37,11 @@ app.post('/msg',(req, res) => {
     console.log("message: ", req.body.msg);
     console.log("hash: ", req.body.hashMsg)
     //save message
-    /*
+    
     db.serialize(() => {
-    db.run("CREATE TABLE messages (id INTEGER PRIMARY KEY,message TEXT,link TEXT)");
+    db.run("CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY,message TEXT,link TEXT,amountRequestMsg INTEGER)");
 
-    db.run(`INSERT INTO messages(message,link) VALUES(?,?)`, ['msg','link'], function(err:any) {
+    db.run(`INSERT INTO messages(message,link) VALUES(?,?,?)`, [req.body.msg,req.body.hashMsg, 1], function(err:any) {
     if (err) {
       return console.log(err.message);
     }
@@ -39,9 +49,9 @@ app.post('/msg',(req, res) => {
     });
 
     db.each("SELECT message AS id, link FROM messages", (err:any, row:any) => {
-        console.log(row.id + ": " + row.info);
+        console.log(row.id + ": " + row.message + ": " + row.link);
     });
-});*/
+});
 }) 
 
 app.listen(port, () => {

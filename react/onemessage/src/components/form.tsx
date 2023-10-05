@@ -40,13 +40,13 @@ function Form() {
           console.log("error") 
         });
     }
-  }, [hash, message]);
+  }, [hash]);
 
   const handleSubmit = async (e:any) => {
     const newHash = makeid(8);
     await setHash(newHash); 
   }
-
+if (hash == ''){
   return (
     <div className="msg">
          <div>
@@ -54,9 +54,15 @@ function Form() {
             <textarea name="message" rows={4} cols={50} onChange={onChangeMsg} value={message} /><br />
             <button onClick={handleSubmit} className="button-9" role="button">Send</button><br />
         </div>
-        <p>hash: {hash}</p>
     </div>
   );
+  }else{
+    return (
+    <div className="msg">
+        <p>hash: http//:yoursite/{hash}</p>
+    </div>
+    );
+  }
 }
 
 export default Form;
