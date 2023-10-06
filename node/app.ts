@@ -24,10 +24,22 @@ app.get('/msg/id/:id',(req, res) => {
 
 app.get('/msg/link/:link',(req, res) => {
     let link = req.params.link;
+    //UPDATE employees SET lastname = 'Smith' WHERE employeeid = 3;
 
     db.get("SELECT * FROM messages WHERE link = ?",[link], function(err:any, row:any) {
         console.log(row);
-        return res.json(row); 
+        try {
+            if (row.amountRequestMsg == 0){
+                db.get("DELETE FROM messages WHERE link = ?",[link])
+                
+            }else{
+                db.get("UPDATE messages SET amountRequestMsg = 0 WHERE link = ?",[link])
+                return res.json(row); 
+            }
+        } catch(e) {
+            console.log("error")
+        }
+       
     });
     //send json data
 }) 
