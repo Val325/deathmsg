@@ -59,7 +59,7 @@ if (hash == ''){
   }else{
     return (
     <div className="msg">
-        <p>hash: http//:yoursite/{hash}</p>
+        <span>hash: http//:localhost:8000/{hash}</span>
     </div>
     );
   }

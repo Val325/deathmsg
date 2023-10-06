@@ -27,7 +27,7 @@ app.get('/msg/link/:link',(req, res) => {
 
     db.get("SELECT * FROM messages WHERE link = ?",[link], function(err:any, row:any) {
         console.log(row);
-        return row; 
+        return res.json(row); 
     });
     //send json data
 }) 
@@ -41,7 +41,7 @@ app.post('/msg',(req, res) => {
     db.serialize(() => {
     db.run("CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY,message TEXT,link TEXT,amountRequestMsg INTEGER)");
 
-    db.run(`INSERT INTO messages(message,link) VALUES(?,?,?)`, [req.body.msg,req.body.hashMsg, 1], function(err:any) {
+    db.run(`INSERT INTO messages(message,link,amountRequestMsg) VALUES(?,?,?)`, [req.body.msg,req.body.hashMsg, 1], function(err:any) {
     if (err) {
       return console.log(err.message);
     }

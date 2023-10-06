@@ -15,8 +15,9 @@ header {
   color: white;
 }
 .msg{
+    text-align:center;
     margin: auto;
-    width: 10%;
+    width: 420px;
     padding: 10px;
 }
 .button-9 {

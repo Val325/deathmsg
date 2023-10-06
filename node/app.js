@@ -26,6 +26,7 @@ app.get('/msg/link/:link', (req, res) => {
     let link = req.params.link;
     db.get("SELECT * FROM messages WHERE link = ?", [link], function (err, row) {
         console.log(row);
+        return res.json(row);
     });
     //send json data
 });
@@ -35,14 +36,14 @@ app.post('/msg', (req, res) => {
     console.log("hash: ", req.body.hashMsg);
     //save message
     db.serialize(() => {
-        db.run("CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY,message TEXT,link TEXT)");
-        db.run(`INSERT INTO messages(message,link) VALUES(?,?)`, [req.body.msg, req.body.hashMsg], function (err) {
+        db.run("CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY,message TEXT,link TEXT,amountRequestMsg INTEGER)");
+        db.run(`INSERT INTO messages(message,link,amountRequestMsg) VALUES(?,?,?)`, [req.body.msg, req.body.hashMsg, 1], function (err) {
             if (err) {
                 return console.log(err.message);
             }
         });
         db.each("SELECT message AS id, link FROM messages", (err, row) => {
-            console.log(row.id + ": " + row.info);
+            console.log(row.id + ": " + row.message + ": " + row.link);
         });
     });
 });
