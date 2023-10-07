@@ -25,6 +25,10 @@ function Form() {
         return result;
   }
   
+  function copyText(){
+    navigator.clipboard.writeText("http//localhost:3000/" + hash)
+  } 
+
   useEffect(() => {
     if (hash !== '') {
       const requestOptions = {
@@ -59,7 +63,7 @@ if (hash == ''){
   }else{
     return (
     <div className="msg">
-        <span>hash: http//:localhost:8000/{hash}</span>
+        <span onClick={copyText}>http//localhost:3000/{hash}</span>
     </div>
     );
   }

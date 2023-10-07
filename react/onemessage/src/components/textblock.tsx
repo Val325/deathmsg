@@ -34,7 +34,7 @@ function Text() {
     }
   }, [link]);
 
-
+  if (dataLink){
   return (
     <>
     {Header()}
@@ -43,6 +43,16 @@ function Text() {
     </div>
     </>
   );
+    }else {
+  return (
+    <>
+    {Header()}
+    <div className="Text">
+        Message deleted 
+    </div>
+    </>
+  );
+    }
 }
 
 export default Text;

@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+
+  server:
+
+    build: node/
+
+    command: node app.js
+
+    ports:
+      - 8000:8000
+
+  client:
+
+    build: react/onemessage/
+ 
+    command: npm start
+
+    network_mode: host
+ 
+    depends_on:
+      - server
